@@ -1,7 +1,38 @@
-1. Sign extension:
+                                    1. Sign extension:
 Right shifting a signed number to position 0 extends the sign bit to all the bit positions.
 Example: +1  = b0000 0001
          -1 = b11111111 (2s complement of +1)
           Now -5 =  11111011   (+5 = 00000101)
           -5>>7 = 11111111; (11111111 = -1)
 Conclusion: Right shift a signed number return 0 for +ve numbers and -1 for negative numbers
+
+
+                                    2. Find if 2 numbers are opposite sign
+
+method 1: (x ^ Y) < 0;
+
+XOR gives 1, where bits differ. If the MSB is different, which denotes sign, it will give 1 at MSB in the result of x ^ y, which means the product of x ^ y is negative, so x ^ y < 0 will give true if numbbers are of opposite sign.
+
+method 2: x * y < 0; if the product is negative, one of the numbers is negative, but this is slower and Multiplication can overflow for large values.
+
+                                    3. Compute the integer absolute value (abs) without branching
+
+r = (v < 0) ? -(unsigned)v : v (with branching)
+
+Concept 1: If u typecast a signed number to unsigned, bits are not changed, the same number with the bits as it is isintrepreted as positive number.
+After that, if you negate the positive number, the resulting negative number, in its 2's complement unsigned intrepretation will give the original value of number v.
+
+Example lets take 4 bit number: -3
+-3 = b1101
+unsigned(b1101)  = 13.
+urary -ve (13) = -13 = b(0011)
+unsigned b0011 = 3
+
+int v;           // we want to find the absolute value of v
+unsigned int r;  // the result goes here 
+int const mask = v >> sizeof(int) * CHAR_BIT - 1;
+r = (v ^ mask) - mask;
+
+concept: 2s complement for negative, for positive, no effect;
+mask will return -1 for negative numbers, which is all ones in binary
+so number xor with all ones, then subtracting mask is -(-1), so 2s complement (xor all bits with 1) and add 1, so get the absolute
