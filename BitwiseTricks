@@ -1,0 +1,7 @@
+1. Sign extension:
+Right shifting a signed number to position 0 extends the sign bit to all the bit positions.
+Example: +1  = b0000 0001
+         -1 = b11111111 (2s complement of +1)
+          Now -5 =  11111011   (+5 = 00000101)
+          -5>>7 = 11111111; (11111111 = -1)
+Conclusion: Right shift a signed number return 0 for +ve numbers and -1 for negative numbers
